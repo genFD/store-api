@@ -1,9 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import colors from 'colors';
+import asyncError from 'express-async-errors';
 import notFound from './middleware/notFound.js';
 import error from './middleware/error.handler.js';
 import connectDB from './db/config.js';
+import productsRouter from './routes/products.routes.js';
 
 colors.setTheme({
   server: ['bgCyan', 'black', 'bold', 'underline'],
@@ -17,6 +19,7 @@ function controller(req, res) {
   res.send('test');
 }
 app.get('/', controller);
+app.use('/api/v1/products', productsRouter);
 app.use(notFound);
 app.use(error);
 const PORT = process.env.PORT || 6000;
