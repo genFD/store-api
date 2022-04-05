@@ -1,8 +1,19 @@
+import Product from '../models/products.model.js';
+
+// @desc : get all products
+// @route : Get api/products
+// @access : public
 const getAllProducts = async (req, res) => {
-  // throw new Error('testing error');
-  res.status(200).json({ data: 'List of products' });
+  const products = await Product.find(req.query);
+  res.status(200).json({ nbHits: products.length, products });
 };
+// @desc : fetch single products
+// @route : Get api/products
+// @access : public
 const getSingleProduct = async (req, res) => {
-  res.status(200).json({ data: 'single product' });
+  const product = await Product.find({ _id: req.params.id });
+  if (product) {
+    res.status(200).json({ product });
+  }
 };
 export { getAllProducts, getSingleProduct };
